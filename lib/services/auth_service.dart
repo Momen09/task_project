@@ -1,22 +1,23 @@
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 import 'package:task1/consts/consts.dart';
 import 'dart:convert';
 
-import '../model/auth_model.dart';
 
 class AuthService {
-  Future<User> login(String username, String password) async {
-    final response = await http.post(
-      Uri.parse(authUrl),
-      body: jsonEncode({
+  final Dio _dio = Dio();
+
+  Future<Response> login(String username, String password) async {
+    final response = await _dio.post(
+      authUrl,
+      data: jsonEncode({
         'username': username,
         'password': password,
       }),
-      headers: {'Content-Type': 'application/json'},
+      options: Options(headers: {'Content-Type': 'application/json'}),
     );
 
     if (response.statusCode == 200) {
-      return User.fromJson(jsonDecode(response.body));
+      return response;
     } else {
       throw Exception('Failed to login');
     }

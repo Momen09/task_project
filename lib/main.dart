@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        initialRoute: '/tasks',
+        initialRoute: '/',
         routes: {
           '/': (context) => Consumer<AuthViewModel>(
             builder: (context, authViewModel, child) {

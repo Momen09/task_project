@@ -5,6 +5,7 @@ import '../model/task_model.dart';
 import '../services/task_service.dart';
 
 class TaskViewModel extends ChangeNotifier {
+
   final TaskService _taskService = TaskService();
   List<Task> _tasks = [];
   bool _isLoading = false;

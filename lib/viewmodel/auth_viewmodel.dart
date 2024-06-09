@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:dio/dio.dart';
-import 'package:task1/consts/consts.dart';
+import 'package:task1/services/auth_service.dart';
 
 class AuthViewModel extends ChangeNotifier {
   bool _isLoggedIn = false;
@@ -15,10 +14,8 @@ class AuthViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      var response = await Dio().post(authUrl, data: {
-        'username': username,
-        'password': password,
-      });
+      final authService = AuthService();
+      final response = await authService.login(username, password);
 
       if (response.statusCode == 200) {
         _token = response.data['token'];
@@ -26,7 +23,7 @@ class AuthViewModel extends ChangeNotifier {
         notifyListeners();
       }
     } catch (e) {
-
+      // Handle errors
     } finally {
       _isLoading = false;
       notifyListeners();
